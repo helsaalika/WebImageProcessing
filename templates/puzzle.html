@@ -252,13 +252,50 @@
             <div class="jumbotron jumbotron-fluid text-center">
                 <h1 class="display-4">Hasil Foto</h1>
                 <!-- Tampilkan gambar hasil di sini -->
-                <img class="img-fluid" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                <!-- <img class="img-fluid" src="{{ url_for('static', filename=file_path) }}" alt="image here"> -->
+                <div class="row" id="randomized-images">
+                    {% for i in range(rows) %}
+                        <div class="row">
+                            {% for j in range(cols) %}
+                                {% set image_index = i * cols + j %}
+                                {% if image_index < image_paths|length %}
+                                    {% set image_path = image_paths[image_index] %}
+                                    <div class="col">
+                                        <img src="{{ image_path }}" alt="Divided Image (Row {{ i }}, Col {{ j }})" class="img-fluid" style="width: 100%; margin-top: 17px;">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    /* Gaya CSS tambahan dapat ditambahkan di sini */
-</style>
+<script>
+    // Fungsi untuk mengacak array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Fungsi untuk menjalankan pengacakan setelah seluruh halaman dimuat
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil elemen-elemen gambar dalam div dengan ID 'randomized-images'
+        const container = document.getElementById('randomized-images');
+        const images = Array.from(container.querySelectorAll('img'));
+
+        // Lakukan pengacakan pada elemen-elemen gambar
+        shuffleArray(images);
+
+        // Hapus semua elemen gambar dari div
+        images.forEach(image => container.removeChild(image));
+
+        // Tambahkan elemen-elemen gambar yang sudah diacak kembali ke div
+        images.forEach(image => container.appendChild(image));
+    });
+</script>
 {% endblock %}
