@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block body %}
+<div class="background">
+    <div class="container p-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-6 mt-5">
+                <h2 class="display-5 text-center">Pixel Perfection</h2>
+                <p class="lead"> Website yang berfokus pada peningkatan dan perbaikan Citra Digital </p>
+                <form id="" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                    Ubah Button Ini...
+                    <input name="file" type="file" id="inputGroupFile04" accept="image/*" onchange="toggleUploadButton()">
+                    <button type="submit" class="btn btn-primary" id="uploadButton" disabled>Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
